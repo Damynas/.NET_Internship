@@ -218,15 +218,15 @@ namespace Library.App_Code
         /// <param name="peopleData">Dictionary that holds data about how many books each person has taken</param>
         private void TakeBook(BooksRegister allBooks, Dictionary<string, int> peopleData)
         {
-            string iSBN, fullName;
-            int daysToTake;
-
             Console.Clear();
             ListBooks(allBooks, "available", "");
             List<string> availableISBN = allBooks.GetAvailableISBN();
 
             if (availableISBN.Count > 0) // Checks if there are available books to be taken
             {
+                string iSBN, fullName;
+                int daysToTake;
+
                 Console.CursorLeft = 0;
 
                 Console.WriteLine("Type 'exit' any time to return to the main menu...");
