@@ -3,7 +3,7 @@
 namespace Library.App_Code
 {
     /// <summary>
-    /// Class that handles menu drawing ar options choosing
+    /// Class that handles menu drawing and option choosing
     /// </summary>
     public class Menu
     {
@@ -98,7 +98,7 @@ namespace Library.App_Code
         }
 
         /// <summary>
-        /// Method that hangles keyboard input for the menu
+        /// Method that handles keyboard input for the menu
         /// </summary>
         /// <param name="menuLength">The number of options in the menu</param>
         /// <param name="stillOn">Flag to know if escape is pressed</param>

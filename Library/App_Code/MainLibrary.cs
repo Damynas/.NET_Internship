@@ -62,40 +62,35 @@ namespace Library.App_Code
                             case 1: // Filter by author
                                 Console.Clear();
                                 Console.WriteLine("Type 'exit' any time to return to the main menu...");
-                                Console.Write("Enter author: ");
-                                filteringCase = Console.ReadLine();
+                                filteringCase = Inputing.InputNonEmptyString("Enter author: ", "author");
                                 if (filteringCase == "exit") { break; }
                                 ListBooks(allBooks, "author", filteringCase);
                                 break;
                             case 2: // filter by category
                                 Console.Clear();
                                 Console.WriteLine("Type 'exit' any time to return to the main menu...");
-                                Console.Write("Enter category: ");
-                                filteringCase = Console.ReadLine();
+                                filteringCase = Inputing.InputNonEmptyString("Enter category: ", "category");
                                 if (filteringCase == "exit") { break; }
                                 ListBooks(allBooks, "category", filteringCase);
                                 break;
                             case 3: // filter by language
                                 Console.Clear();
                                 Console.WriteLine("Type 'exit' any time to return to the main menu...");
-                                Console.Write("Enter language: ");
-                                filteringCase = Console.ReadLine();
+                                filteringCase = Inputing.InputNonEmptyString("Enter language: ", "language");
                                 if (filteringCase == "exit") { break; }
                                 ListBooks(allBooks, "language", filteringCase);
                                 break;
                             case 4: // Filter by ISBN
                                 Console.Clear();
                                 Console.WriteLine("Type 'exit' any time to return to the main menu...");
-                                Console.Write("Enter ISBN: ");
-                                filteringCase = Console.ReadLine();
+                                filteringCase = Inputing.InputNonEmptyString("Enter ISBN: ", "ISBN");
                                 if (filteringCase == "exit") { break; }
                                 ListBooks(allBooks, "iSBN", filteringCase);
                                 break;
                             case 5: // Filter by name
                                 Console.Clear();
                                 Console.WriteLine("Type 'exit' any time to return to the main menu...");
-                                Console.Write("Enter name: ");
-                                filteringCase = Console.ReadLine();
+                                filteringCase = Inputing.InputNonEmptyString("Enter name: ", "name");
                                 if (filteringCase == "exit") { break; }
                                 ListBooks(allBooks, "name", filteringCase);
                                 break;
@@ -135,111 +130,45 @@ namespace Library.App_Code
         /// <param name="allBooks">Books register that holds all the books</param>
         private void AddNewBook(BooksRegister allBooks)
         {
-            Console.Clear();
             string name, author, category, language, iSBN;
+            int year, month, day;
             DateTime publicationDate;
-            bool parsed;
 
+            Console.Clear();
             Console.WriteLine("Type 'exit' any time to return to the main menu...");
 
-            Console.Write("Enter a name of the book: ");
-            name = Console.ReadLine();
+            //Name
+            name = Inputing.InputNonEmptyString("Enter a name of the book: ", "name");
             if (name == "exit") { return; }
-            while (name.Length == 0) // Length vallidation
-            {
-                Console.Write("Entered name is not valid. Length cannot be zero. Please re-enter book's name: ");
-                name = Console.ReadLine();
-                if (name == "exit") { return; }
-            }
 
-            Console.Write("Enter an author of the book: ");
-            author = Console.ReadLine();
+            //Author
+            author = Inputing.InputNonEmptyString("Enter an author of the book: ", "author");
             if (author == "exit") { return; }
-            while (author.Length == 0) // Length vallidation
-            {
-                Console.Write("Entered author is not valid. Length cannot be zero. Please re-enter book's author: ");
-                author = Console.ReadLine();
-                if (author == "exit") { return; }
-            }
 
-            Console.Write("Enter book's category: ");
-            category = Console.ReadLine();
+            //Category
+            category = Inputing.InputNonEmptyString("Enter book's category: ", "category");
             if (category == "exit") { return; }
-            while (category.Length == 0) // Length vallidation
-            {
-                Console.Write("Entered category is not valid. Length cannot be zero. Please re-enter book's category: ");
-                category = Console.ReadLine();
-                if (category == "exit") { return; }
-            }
 
-            Console.Write("Enter book's language: ");
-            language = Console.ReadLine();
+            //Language
+            language = Inputing.InputNonEmptyString("Enter book's language: ", "lanfuage");
             if (language == "exit") { return; }
-            while (language.Length == 0) // Length vallidation
-            {
-                Console.Write("Entered language is not valid. Length cannot be zero. Please re-enter book's language: ");
-                language = Console.ReadLine();
-                if (language == "exit") { return; }
-            }
 
-            Console.Write("Enter book's publication year(number): ");
-            string publicationYear = Console.ReadLine();
-            if (publicationYear == "exit") { return; }
-            parsed = int.TryParse(publicationYear, out int year);
-            if (year > DateTime.Now.Year || year < 1) { parsed = false; }
-            while (!parsed) // Correct year vallidation
-            {
-                Console.Write("Entered year is not valid. Please re-enter book's publication year: ");
-                publicationYear = Console.ReadLine();
-                if (publicationYear == "exit") { return; }
-                parsed = int.TryParse(publicationYear, out year);
-                if (year > DateTime.Now.Year || year < 1) { parsed = false; }
-            };
+            //Publication date
+            year = Inputing.InputPublicationYear();
+            if (year == -1) { return; }
 
-            Console.Write("Enter book's publication month(number): ");
-            string publicationMonth = Console.ReadLine();
-            if (publicationMonth == "exit") { return; }
-            parsed = int.TryParse(publicationMonth, out int month);
-            if (month > 12 || month < 1) { parsed = false; }
-            if (year == DateTime.Now.Year && month > DateTime.Now.Month) { parsed = false; }
-            while (!parsed) // Correct month vallidation
-            {
-                Console.Write("Entered month is not valid. Please re-enter book's publication month: ");
-                publicationMonth = Console.ReadLine();
-                if (publicationMonth == "exit") { return; }
-                parsed = int.TryParse(publicationMonth, out month);
-                if (month > 12 || month < 1) { parsed = false; }
-                if (year == DateTime.Now.Year && month > DateTime.Now.Month) { parsed = false; }
-            };
+            month = Inputing.InputPublicationMonth(year);
+            if (month == -1) { return; }
 
-            Console.Write("Enter book's publication day(number): ");
-            string publicationDay = Console.ReadLine();
-            if (publicationDay == "exit") { return; }
-            parsed = int.TryParse(publicationDay, out int day);
-            if (day > 31 || day < 1) { parsed = false; }
-            if (year == DateTime.Now.Year && month == DateTime.Now.Month && day > DateTime.Now.Day) { parsed = false; }
-            if ((month == 2 && day > 28) || ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30)) { parsed = false; }
-            while (!parsed)  // Correct day vallidation
-            {
-                Console.Write("Entered day is not valid. Please re-enter book's publication day: ");
-                publicationDay = Console.ReadLine();
-                if (publicationDay == "exit") { return; }
-                parsed = int.TryParse(publicationDay, out day);
-                if (day > 31 || day < 1) { parsed = false; }
-                if (year == DateTime.Now.Year && month == DateTime.Now.Month && day > DateTime.Now.Day) { parsed = false; }
-                if ((month == 2 && day > 28) || ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30)) { parsed = false; }
-            };
+            day = Inputing.InputPublicationDay(year, month);
+            if (day == -1) { return; }
+
             publicationDate = new DateTime(year, month, day);
 
-            Console.Write("Enter book's ISBN code: ");
-            iSBN = Console.ReadLine();
-            if (iSBN == "exit") { return; }
+            //ISBN
             List<string> allISBN = allBooks.GetAllISBN();
-            while (allISBN.Contains(iSBN))  // Vallidation to see if this book already exists in the library (ISBN codes in my library version has to be unique)
-            {
-                Console.Write("Entered ISBN is not valid, becouse it already exists. Please re-enter book's ISBN code: ");
-                iSBN = Console.ReadLine();
-            };
+            iSBN = Inputing.InputISBN(allISBN, false, "to add (every book in this library needs to have unique ISBN code)");
+            if (iSBN == "exit") { return; }
 
             Book book = new(name, author, category, language, publicationDate, iSBN);
 
@@ -289,6 +218,9 @@ namespace Library.App_Code
         /// <param name="peopleData">Dictionary that holds data about how many books each person has taken</param>
         private void TakeBook(BooksRegister allBooks, Dictionary<string, int> peopleData)
         {
+            string iSBN, fullName;
+            int daysToTake;
+
             Console.Clear();
             ListBooks(allBooks, "available", "");
             List<string> availableISBN = allBooks.GetAvailableISBN();
@@ -299,25 +231,13 @@ namespace Library.App_Code
 
                 Console.WriteLine("Type 'exit' any time to return to the main menu...");
 
-                Console.Write("Enter desired book's ISBN code: ");
-                string iSBN = Console.ReadLine();
+                //ISBN
+                iSBN = Inputing.InputISBN(availableISBN, true, "to take");
                 if (iSBN == "exit") { return; }
-                while (!availableISBN.Contains(iSBN))   // Vallidation for available and correct ISBN code
-                {
-                    Console.Write("Entered ISBN is not valid. Please re-enter desired book's ISBN code: ");
-                    iSBN = Console.ReadLine();
-                    if (iSBN == "exit") { return; }
-                };
 
-                Console.Write("Enter your full name: ");
-                string fullName = Console.ReadLine();
+                //Full name
+                fullName = Inputing.InputNonEmptyString("Enter your full name: ", "name");
                 if (fullName == "exit") { return; }
-                while (fullName.Length == 0) // Length vallidation
-                {
-                    Console.Write("Entered name is not valid. Length cannot be zero. Please re-enter your full name: ");
-                    fullName = Console.ReadLine();
-                    if (fullName == "exit") { return; }
-                }
 
                 if (peopleData.ContainsKey(fullName))
                 {
@@ -330,19 +250,9 @@ namespace Library.App_Code
                     }
                 }
 
-                Console.Write("For how many days do you want to take this book? (You can only take a book for a maximum of 60 days): ");
-                string toTakeDays = Console.ReadLine();
-                if (toTakeDays == "exit") { return; }
-                bool parsed = int.TryParse(toTakeDays, out int daysToTake);
-                if (daysToTake > 60 || daysToTake < 0) { parsed = false; }
-                while (!parsed) // Vallidation to see if a person is not trying to take book for more than two months
-                {
-                    Console.Write("Entered number is not valid. Please re-enter desired days number: ");
-                    toTakeDays = Console.ReadLine();
-                    if (toTakeDays == "exit") { return; }
-                    parsed = int.TryParse(toTakeDays, out daysToTake);
-                    if (daysToTake > 60 || daysToTake < 0) { parsed = false; }
-                };
+                //Taking length
+                daysToTake = Inputing.InputDaysToTake();
+                if(daysToTake == -1) { return; }
 
                 TakingHistory newHistoryEvent = new(fullName, daysToTake, DateTime.Now);
                 allBooks.GetBookByISBN(iSBN).AddHistoryEvent(newHistoryEvent);
@@ -380,18 +290,11 @@ namespace Library.App_Code
 
                 Console.WriteLine("Type 'exit' any time to return to the main menu...");
 
-                Console.Write("Enter book's to return ISBN code: ");
-                string iSBN = Console.ReadLine();
+                string iSBN = Inputing.InputISBN(takenISBN, true, "to return");
                 if (iSBN == "exit") { return; }
-                while (!takenISBN.Contains(iSBN))  // Vallidation for available and correct ISBN code
-                {
-                    Console.Write("Entered ISBN is not valid. Please re-enter desired book's ISBN code: ");
-                    iSBN = Console.ReadLine();
-                    if (iSBN == "exit") { return; }
-                };
 
                 TakingHistory lastEvent = allBooks.GetBookByISBN(iSBN).GetLastHistoryEvent();
-                if(lastEvent != null)
+                if (lastEvent != null)
                 {
                     lastEvent.DateReturned = DateTime.Now;
                     allBooks.GetBookByISBN(iSBN).IsTaken = false;
@@ -436,15 +339,8 @@ namespace Library.App_Code
 
                 Console.WriteLine("Type 'exit' any time to return to the main menu...");
 
-                Console.Write("Enter book's to remove ISBN code: ");
-                string iSBN = Console.ReadLine();
+                string iSBN = Inputing.InputISBN(allISBN, true, "to return");
                 if (iSBN == "exit") { return; }
-                while (!allISBN.Contains(iSBN)) // Vallidation for available and correct ISBN code
-                {
-                    Console.Write("Entered ISBN is not valid. Please re-enter desired book's ISBN code: ");
-                    iSBN = Console.ReadLine();
-                    if (iSBN == "exit") { return; }
-                };
 
                 allBooks.DeleteBookByISBN(iSBN);
 

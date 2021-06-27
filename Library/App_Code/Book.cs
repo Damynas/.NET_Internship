@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Library.App_Code
@@ -56,15 +55,8 @@ namespace Library.App_Code
             return null;
         }
 
-        public override bool Equals(object obj)
-        {
-            return obj is Book book &&
-                   ISBN == book.ISBN;
-        }
+        public override bool Equals(object obj) => obj is Book book && ISBN == book.ISBN;
 
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(ISBN);
-        }
+        public override int GetHashCode() => HashCode.Combine(ISBN);
     }
 }

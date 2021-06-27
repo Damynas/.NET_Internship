@@ -9,7 +9,7 @@ namespace Library.Tests
     public class BooksRegisterTests
     {
         [Fact]
-        public void AddBook_AddSAmeBookTwoTimes_ShouldBeAddedOnlyOneToBooksRegister()
+        public void AddBook_AddSameBookTwoTimes_ShouldBeAddedOnlyOneToBooksRegister()
         {
             //Arange
             BooksRegister booksRegister = new();
@@ -23,7 +23,7 @@ namespace Library.Tests
         }
 
         [Fact]
-        public void GetBook_GetBookFromRegister_ShouldGetTheSameBook()
+        public void GetBookByISBN_GetBookFromRegister_ShouldGetTheSameBook()
         {
             //Arange
             BooksRegister booksRegister = new();
@@ -39,7 +39,7 @@ namespace Library.Tests
         }
 
         [Fact]
-        public void GetISBNList_TestAllVariants_ShouldGetSpecifiedISBNList()
+        public void GetISBNList_TestAllVariants_ShouldGetSpecifiedISBNLists()
         {
             //Arange
             BooksRegister booksRegister = new();
